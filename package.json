@@ -1,0 +1,22 @@
+{
+  "name": "lamington-website",
+  "version": "1.0.0",
+  "description": "The lamington.io website",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoinageCrypto/lamington-website.git"
+  },
+  "author": "Kevin Brown",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CoinageCrypto/lamington-website/issues"
+  },
+  "homepage": "https://github.com/CoinageCrypto/lamington-website#readme",
+  "devDependencies": {
+    "serve": "11.0.0"
+  }
+}
