@@ -1,0 +1,51 @@
+<div class="breadcrumb-area">
+    <div class="container h-100">
+        <div class="row h-100 align-items-end">
+            <div class="col-12">
+                <div class="breadcumb--con">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/"><i class="fa fa-home"></i> Home</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <i class="fa fa-book"></i> <%= page.title %>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="breadcrumb-bg-curve">
+        <img src="/img/core-img/curve-5.png" alt="" />
+    </div>
+</div>
+
+<div class="uza-blog-area section-padding-80">
+    <div class="container">
+        <div class="col-12 col-lg-10">
+            <div class="post-content text-center mb-50">
+                <h2>Guides</h2>
+            </div>
+        </div>
+        <div class="row">
+            <% for (const post of site.posts.toArray()) { %>
+            <div class="col-12 col-lg-4">
+                <div class="single-blog-post bg-img mb-80" style="background-image: url(<%= post.featured_image %>);">
+                    <!-- Post Content -->
+                    <div class="post-content">
+                        <a href="<%= post.path %>" class="post-title"><%= post.title %></a>
+                        <p><%= post.excerpt %></p>
+                        <a href="<%= post.path %>" class="read-more-btn">
+                            Read More <i class="arrow_carrot-2right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+        <%- page.content %>
+    </div>
+</div>

@@ -1,0 +1,144 @@
+---
+title: Installing Lamington
+date: 2019-05-12 14:52:45
+---
+
+<section class="blog-details-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="blog-details-content">
+                    <!-- Post Details Text -->
+                    <div class="post-details-text">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
+                                <div class="post-content text-center mb-50">
+                                    <h2>Installing Lamington</h2>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-10">
+                                <h2>Prerequisites</h2>
+                                <p>
+                                    Lamington requires Docker and NodeJS to be installed
+                                    before it can be used.
+                                </p>
+                                <ol>
+                                    <li>
+                                        <strong>Docker</strong>: We recommend
+                                        <a href="https://www.docker.com/get-started" target="_blank"
+                                            rel="noopener noreferrer">installing Docker with the standard installer</a>
+                                    </li>
+                                    <li>
+                                        <strong>NodeJS</strong>: We recommend
+                                        <a href="https://github.com/creationix/nvm" target="_blank"
+                                            rel="noopener noreferrer">installing NodeJS with NVM</a>
+                                    </li>
+                                </ol>
+                                <h3>Why these tools?</h3>
+                                <p>
+                                    Docker nicely containerises the EOS toolset, including
+                                    nodeos, cleos, keosd, the Contract Development Toolkit
+                                    (CDT), and common settings. We like using Docker for this,
+                                    because it makes it really easy for us to manage the
+                                    versions of those tools, as well as destroy and rebuild
+                                    the container as necessary.
+                                </p>
+                                <p>
+                                    NodeJS is required in order to run your tests and our
+                                    commands that manage the environment. We find testing EOS
+                                    contracts with Typescript to be particularly productive,
+                                    and hope you will too.
+                                </p>
+                                <p>
+                                    NVM does a great job at managing versions of Node, and
+                                    installing it with correct permissions so you can globally
+                                    install packages without sudo.
+                                </p>
+                                <h2>Installing</h2>
+                                <p>
+                                    From here installation is simple. Our recommended approach
+                                    is to install Lamington as a project dev dependency. You
+                                    can also install Lamington globally so you can use it on
+                                    projects without modifying your package.json file.
+                                </p>
+                                <h3>Installing Locally (Recommended)</h3>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ npm i --save-dev lamington
+                                        </h5>
+                                    </div>
+                                </blockquote>
+                                <p>
+                                    Once the dependency is installed, you just need to update
+                                    your package.json file to run Lamington commands for you.
+                                    Here's our recommended set:
+                                </p>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            {<br />
+                                            &emsp;...<br />
+                                            &emsp;"scripts": {<br />
+                                            &emsp;&emsp;"build": "lamington build",<br />
+                                            &emsp;&emsp;"start": "lamington start eos",<br />
+                                            &emsp;&emsp;"stop": "lamington stop eos",<br />
+                                            &emsp;&emsp;"test": "lamington test"<br />
+                                            &emsp;},<br />
+                                            &emsp;...<br />
+                                            }
+                                        </h5>
+                                    </div>
+                                </blockquote>
+                                <p>
+                                    Once that's done, you can run any of those commands as you
+                                    would with NPM by itself, for example, you can test all
+                                    your contracts with:
+                                </p>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ npm t
+                                        </h5>
+                                    </div>
+                                </blockquote>
+                                <h3>Installing Globally</h3>
+                                <p>
+                                    This option works well if you're regularly using Lamington
+                                    as a standard dev tool on your team. The main watch out
+                                    with this option is that you cannot manage multiple
+                                    Lamington versions easily this way. So if you're working
+                                    on multiple projects or with a team, the best thing to do
+                                    is to share the version amongst your team using NPM as a
+                                    project dependency.
+                                </p>
+                                <p>
+                                    The nice thing about installing globally is you don't have
+                                    to do the script setup as above, just:
+                                </p>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ npm i -g lamington
+                                        </h5>
+                                    </div>
+                                </blockquote>
+                                <p>
+                                    Once that's done you're able to immediately run lamington
+                                    commands:
+                                </p>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ lamington test
+                                        </h5>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,17 @@
+# Header
+menu:
+  Home: /
+  Installing: /install-lamington
+  Guides: /guides
+  Contribute: https://github.com/CoinageCrypto/lamington
+  API Documentation: https://api.lamington.io
+
+menu_buttons:
+  Get Started: /install-lamington
+
+# Content
+excerpt_link: Read More
+
+# Miscellaneous
+google_analytics: UA-140069903-1
+favicon: /favicon.ico

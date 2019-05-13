@@ -1,22 +1,23 @@
 {
   "name": "lamington-website",
-  "version": "1.0.0",
-  "description": "The lamington.io website",
-  "main": "index.js",
   "scripts": {
-    "start": "serve ."
+    "clean": "hexo clean",
+    "generate": "hexo generate",
+    "start": "hexo clean && hexo server --config _config.yml,_config.local.yml",
+    "server": "hexo server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CoinageCrypto/lamington-website.git"
+  "version": "0.0.0",
+  "private": true,
+  "hexo": {
+    "version": "3.8.0"
   },
-  "author": "Kevin Brown",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/CoinageCrypto/lamington-website/issues"
-  },
-  "homepage": "https://github.com/CoinageCrypto/lamington-website#readme",
-  "devDependencies": {
-    "serve": "11.0.0"
+  "dependencies": {
+    "hexo": "3.8.0",
+    "hexo-featured-image": "0.2.1",
+    "hexo-front-matter-excerpt": "0.2.0",
+    "hexo-generator-index": "0.2.1",
+    "hexo-renderer-ejs": "0.3.1",
+    "hexo-renderer-marked": "0.3.2",
+    "hexo-server": "0.3.3"
   }
 }

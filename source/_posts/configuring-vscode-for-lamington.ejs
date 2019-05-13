@@ -1,0 +1,161 @@
+---
+title: Configuring VSCode for Lamington
+date: 2019-05-12 15:19:44
+featured_image: header-image.svg
+excerpt: VSCode with Lamington gives you autocomplete and error notifications right in your editor.
+---
+
+<section class="blog-details-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="blog-details-content">
+                    <!-- Post Details Text -->
+                    <div class="post-details-text">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
+                                <div class="post-content text-center mb-50">
+                                    <h2>Configuring VSCode for use with Lamington</h2>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <img class="mb-50" src="{% asset_path header-image.svg %}"
+                                    alt="Visual Studio Code + Lamington = Love" />
+                            </div>
+                            <div class="col-12 col-lg-10">
+                                <h2>Prerequisites</h2>
+                                <p>
+                                    Install <a href="/installing">Lamington</a>,
+                                    <a href="https://code.visualstudio.com/download" target="_blank"
+                                        rel="noopener noreferrer">VSCode</a>, and
+                                    <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">Homebrew</a>.
+                                </p>
+
+                                <h3>CDT</h3>
+                                <p>
+                                    VSCode can natively compile C++, and can also help you by
+                                    debugging your tests. This gives you red squiggles
+                                    whenever there's a problem, and lets you poke at your data
+                                    as your tests run. The end result of this guide doesn't
+                                    fully understand all of the EOS specific syntax, but it's
+                                    a lot better than working outside of an IDE.
+                                </p>
+                                <p>
+                                    Unfortunately we do not yet know of a good way to expose
+                                    the CDT that's installed inside the Docker container to
+                                    the main machine, but if you know a good way to do this,
+                                    we're all ears! Please contact us on Slack!
+                                </p>
+                                <p>
+                                    To install the CDT on your machine so VSCode can see it,
+                                    we can use Homebrew.
+                                </p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ brew tap eosio/eosio.cdt<br />
+                                            $ brew install eosio.cdt
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <h3>C++ Plugin for VSCode</h3>
+                                <p>
+                                    So that VSCode can understand our C++, we'll need to
+                                    <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools"
+                                        target="_blank" rel="noopener noreferrer">install the C++ plugin from
+                                        Microsoft</a>.
+                                </p>
+
+                                <h2>Configuring VSCode to Compile EOS Smart Contracts</h2>
+                                <p>
+                                    Once all of that's done, you now have the header files you
+                                    need for VSCode to understand your contracts. Configure
+                                    VSCode by editing your settings.json file, either in the
+                                    workspace or for your user account depending on whether
+                                    you'd rather keep these settings to tell it where to find
+                                    the CDT:
+                                </p>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            {<br />
+                                            &emsp;"C_Cpp.default.includePath": [<br />
+                                            &emsp;&emsp;"/usr/local/eosio.cdt/include",<br />
+                                            &emsp;&emsp;"/usr/local/Cellar/eosio.cdt/1.6.1/opt/eosio.cdt/include"<br />
+                                            &emsp;],<br />
+                                            }
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <h3>Configuring VSCode to Debug Your Tests</h3>
+                                <p>
+                                    Lamington does not yet support debugging of the C++ code,
+                                    but you can debug your Javascript/Typescript tests using
+                                    VSCode. This allows you to use the inspector and see or
+                                    manipulate the values of your tables at any step in your
+                                    tests.
+                                </p>
+                                <p>
+                                    Edit (or creacte) the launch.json file in the .vscode
+                                    directory to have a configuration like so:
+                                </p>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            {<br />
+                                            &emsp;"version": "0.2.0",<br />
+                                            &emsp;"configurations": [<br />
+                                            &emsp;&emsp;{<br />
+                                            &emsp;&emsp;&emsp;"name": "Lamington Test",<br />
+                                            &emsp;&emsp;&emsp;"type": "node",<br />
+                                            &emsp;&emsp;&emsp;"request": "launch",<br />
+                                            &emsp;&emsp;&emsp;"runtimeExecutable": "npm",<br />
+                                            &emsp;&emsp;&emsp;"runtimeArgs": ["test"],<br />
+                                            &emsp;&emsp;&emsp;"timeout": 60000<br />
+                                            &emsp;&emsp;}<br />
+                                            &emsp;]<br />
+                                            }
+                                        </h5>
+                                    </div>
+                                </blockquote>
+                                <p>
+                                    This configuration will run npm test for you and allow you
+                                    to step through breakpoints in your JS/TS tests.
+                                </p>
+
+                                <h3>Known Issues</h3>
+                                <ul>
+                                    <li>
+                                        VSCode errors when you use "something"_n to create EOS
+                                        names but the contract compiles and deploy successfully
+                                    </li>
+                                    <li>
+                                        VSCode sometimes formats your code very oddly because
+                                        ClangFormat doesn't seem very happy with C++11
+                                        Attributes
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Know a fix for any of the above issues? Contact us on
+                                    Slack and let us know, or send a PR for this page so we
+                                    can make it better!
+                                </p>
+
+                                <h3>Code!</h3>
+                                <p>
+                                    Your environment is now set up for VSCode. C++ files
+                                    should autocomplete for you, and you can step through your
+                                    tests with the integrated debugger. Enjoy!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

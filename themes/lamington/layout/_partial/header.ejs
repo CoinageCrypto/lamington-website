@@ -1,0 +1,44 @@
+<header class="header-area">
+  <!-- Main Header Start -->
+  <div class="main-header-area">
+    <div class="classy-nav-container breakpoint-off">
+      <!-- Classy Menu -->
+      <nav class="classy-navbar justify-content-between" id="uzaNav">
+        <!-- Logo -->
+        <a class="nav-brand" href="/">
+          <img src="/img/logo.svg" alt="Lamington - Build better EOS smart contracts" style="width: 50%;" /></a>
+
+        <!-- Navbar Toggler -->
+        <div class="classy-navbar-toggler">
+          <span class="navbarToggler"><span></span><span></span><span></span></span>
+        </div>
+
+        <!-- Menu -->
+        <div class="classy-menu">
+          <!-- Menu Close Button -->
+          <div class="classycloseIcon">
+            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+          </div>
+
+          <!-- Nav Start -->
+          <div class="classynav">
+            <ul id="nav">
+              <% for (const navItem of Object.keys(theme.menu)) { %>
+              <li class="<%= is_current(theme.menu[navItem]) ? 'current-item' : '' %>">
+                <a href="<%= theme.menu[navItem] %>"><%= navItem %></a>
+              </li>
+              <% } %>
+            </ul>
+
+            <div class="get-a-quote ml-4 mr-3">
+              <% for (const navButton of Object.keys(theme.menu_buttons)) { %>
+              <a href="<%= theme.menu_buttons[navButton] %>" class="btn uza-btn"><%= navButton %></a>
+              <% } %>
+            </div>
+          </div>
+          <!-- Nav End -->
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,60 @@
+<footer class="footer-area section-padding-80-0">
+  <div class="container">
+    <div class="row justify-content-between">
+
+      <!-- Single Footer Widget -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="single-footer-widget mb-80">
+          <!-- Widget Title -->
+          <h4 class="widget-title">Quick Links</h4>
+
+          <!-- Nav -->
+          <nav>
+            <ul class="our-link">
+              <% for (const navItem of Object.keys(theme.menu)) { %>
+              <li><a href="<%= theme.menu[navItem] %>"><%= navItem %></a> </li>
+              <% } %>
+              <% for (const navButton of Object.keys(theme.menu_buttons)) { %>
+              <li><a href="<%= theme.menu_buttons[navButton] %>"><%= navButton %></a> </li>
+              <% } %>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Single Footer Widget -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="single-footer-widget mb-80">
+          <!-- Widget Title -->
+          <h4 class="widget-title">About Us</h4>
+          <p>Lamington is made by an open source team with support from <a href="https://coina.ge">Coinage</a>.</p>
+
+          <!-- Copywrite Text -->
+          <div class="copywrite-text mb-30">
+            <p>&copy; Copyright
+              <script>
+                document.write(new Date().getFullYear());
+              </script> <a href="https://coina.ge">Coinage Pty Ltd</a></p>
+          </div>
+
+          <!-- Social Info -->
+          <div class="footer-social-info">
+            <a href="https://github.com/CoinageCrypto/lamington" title="GitHub" target="_blank"
+              rel="noopener noreferrer"><i class="fa fa-github"></i></a>
+            <a href="https://forms.gle/bvUPg2as8fTU6NJN8" title="Slack" target="_blank" rel="noopener noreferrer"><i
+                class="fa fa-slack"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 30px;">
+      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+      This template is made with
+      <i class="fa fa-heart-o" aria-hidden="true" style="align-self: center; padding: 4px;"></i> by
+      <a href="https://colorlib.com" target="_blank" rel="noopener"
+        style="font-size: 14px; font-weight: 400; padding-left: 4px;">Colorlib</a>, with changes by Coinage
+      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    </div>
+  </div>
+</footer>
