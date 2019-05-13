@@ -3,14 +3,14 @@
 <%- partial('_partial/head') %>
 
 <body>
-  <%- partial('_partial/preloader') %>
-  <%- partial('_partial/header', null, {cache: !config.relative_link}) %>
+  <%- partial('_partial/preloader', null, {cache: !config.relative_link}) %>
+  <%- partial('_partial/header') %>
 
   <%- body %>
 
   <%- partial('_partial/slack-signup', null, {cache: !config.relative_link}) %>
   <%- partial('_partial/footer', null, {cache: !config.relative_link}) %>
-  <%- partial('_partial/after-footer') %>
+  <%- partial('_partial/after-footer', null, {cache: !config.relative_link}) %>
 </body>
 
 </html>
