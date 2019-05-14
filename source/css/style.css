@@ -2014,7 +2014,8 @@ input:focus {
   }
 }
 
-.blog-details-content ol li {
+.blog-details-content ol li,
+.blog-details-content ul li {
   list-style: decimal;
   font-size: 18px;
   color: #a6a6a6;
@@ -2022,11 +2023,24 @@ input:focus {
   margin-left: 18px;
 }
 
-.blog-details-content ol li a {
+.blog-details-content ul li {
+  list-style: disc;
+}
+
+.blog-details-content ul li ul li {
+  list-style: circle;
+}
+
+.blog-details-content ol li a,
+.blog-details-content ul li a {
   font-size: 18px;
   color: #a6a6a6;
   font-weight: 400;
   text-decoration: underline;
+}
+
+.blog-details-content a {
+  font-size: 18px;
 }
 
 .uza-pagination {
@@ -2209,6 +2223,16 @@ input:focus {
   .uza-blockquote .text h6 {
     font-size: 20px;
   }
+}
+
+span.code {
+  background-color: #e3ede6;
+  border: 1px solid #5d8d6d;
+  border-radius: 3.5px;
+  color: #303030;
+  padding: 4px 2px;
+  margin: 0 2px;
+  font-family: "Inconsolata", monospace;
 }
 
 .uza-post-share {

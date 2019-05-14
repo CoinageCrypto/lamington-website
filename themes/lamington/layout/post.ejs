@@ -28,38 +28,39 @@
 <%- page.content %>
 
 <% if (page.related_guides) { %>
-<div class="related-news-area">
-    <h2 class="mb-4">Related Guides</h2>
+<div class="container">
     <div class="row">
-        <!-- Single Blog Post -->
-        <div class="col-12 col-lg-6">
-            <div class="single-blog-post bg-img mb-50" style="background-image: url(./img/bg-img/8.jpg);">
-                <!-- Post Content -->
-                <div class="post-content">
-                    <span class="post-date"><span>23</span> August, 2018</span>
-                    <a href="#" class="post-title">Take A Tour Around Major Tom’s New HQ</a>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur
-                        sadipscing esed diam nonumy eirmod tempor
-                        invidunt ut
-                    </p>
-                    <a href="#" class="read-more-btn">Read More <i class="arrow_carrot-2right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- Single Blog Post -->
-        <div class="col-12 col-lg-6">
-            <div class="single-blog-post bg-img mb-50" style="background-image: url(./img/bg-img/8.jpg);">
-                <!-- Post Content -->
-                <div class="post-content">
-                    <span class="post-date"><span>13</span> December, 2018</span>
-                    <a href="#" class="post-title">Croud &amp; SEO Meet-Up – 20th Sep 2018</a>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur
-                        sadipscing esed diam nonumy eirmod tempor
-                        invidunt ut
-                    </p>
-                    <a href="#" class="read-more-btn">Read More <i class="arrow_carrot-2right"></i></a>
+        <div class="col-12">
+            <div class="related-news-area">
+                <h2 class="mb-4">Related Guides</h2>
+                <div class="row">
+                    <%
+                    // Performance optimisation
+                    const postsBySlug = {};
+                    for (const post of site.posts.toArray()) {
+                        postsBySlug[post.slug] = post;
+                    }
+                    %>
+
+                    <% for (const slug of page.related_guides) { 
+                        const relatedGuide = postsBySlug[slug];
+
+                        if (!relatedGuide) throw new Error(`Couldn't find related guide '${slug}' from frontmatter.`);
+                    %>
+                    <div class="col-12 col-lg-4">
+                        <div class="single-blog-post bg-img mb-80"
+                            style="background-image: url(<%= relatedGuide.featured_image %>);">
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <a href="<%= relatedGuide.path %>" class="post-title"><%= relatedGuide.title %></a>
+                                <p><%= relatedGuide.excerpt %></p>
+                                <a href="<%= relatedGuide.path %>" class="read-more-btn">
+                                    Read More <i class="arrow_carrot-2right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
                 </div>
             </div>
         </div>

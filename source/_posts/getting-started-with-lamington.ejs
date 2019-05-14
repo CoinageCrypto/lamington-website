@@ -1,0 +1,338 @@
+---
+title: Getting Started With Lamington
+date: 2019-05-13 16:52:22
+excerpt: Getting started with Lamington is easier than you think! We'll get you started the easy way.
+featured_image: blast-off.jpeg
+related_guides: [configuring-vscode-for-lamington]
+---
+
+<section class="blog-details-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="blog-details-content">
+                    <!-- Post Details Text -->
+                    <div class="post-details-text">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
+                                <div class="post-content text-center mb-50">
+                                    <h2>Getting Started with Lamington</h2>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <img class="mb-50" src="{% asset_path blast-off.jpeg %}"
+                                    alt="Let's launch with Lamington!" />
+                            </div>
+                            <div class="col-12 col-lg-10">
+                                <h2>Goal</h2>
+                                <p>
+                                    At the end of this guide, you will have:
+                                    <ul>
+                                        <li>A simple smart contract with one action, only callable by one account</li>
+                                        <li>A JavaScript unit test suite which tests the business logic around who is
+                                            able to call the action
+                                        </li>
+                                        <li>Optional: Instructions on how to use TypeScript for the unit testing
+                                            suite we previously wrote in JavaScript</li>
+                                        <li>An understanding of what exactly Lamington is doing for you, and how you can
+                                            leverage it to its fullest</li>
+                                    </ul>
+                                </p>
+                                <h2>Prerequisites</h2>
+                                <p>
+                                    Follow the instructions on the <a href="/install-lamington"></a>Install
+                                    Lamington</a> page to install Lamington <b>globally</b>.
+                                    Once you've done that, you're good to get started!
+                                </p>
+
+                                <p>We'll start from an empty folder.</p>
+
+                                <h2>Step 1: Add a package.json file</h2>
+
+                                <p>We need to have a package.json file so we can manage our NPM dependencies for the
+                                    project. Let's create a placeholder <span class="code">package.json</span> file
+                                    which can be edited later if needed.</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ npm init -y
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <p>This command is a standard NPM command (<a href="https://docs.npmjs.com/cli/init"
+                                        target="_blank" rel="noopener noreferrer">which is documented here</a> if you
+                                    want more information about it).</p>
+
+                                <h2>Step 2: Initialise Lamington's Configuration</h2>
+
+                                <p>Ok, now time to get Lamington ready to go:</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ lamington init
+                                            $ npm i
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <p>You'll see that the init command created a folder structure for you, and added
+                                    lamington to the devDependencies of the project, which is why we then run <span
+                                        class="code">npm i</span>, so that Lamington will be around to be called from
+                                    your tests later.</p>
+
+                                <h2>Step 3: Add a simple contract to the contracts folder</h2>
+                                <p>Now we can create our smart contract. Because of how Lamington works, this contract
+                                    could actually live anywhere in the structure of the application, so if having a
+                                    <span class="code">contracts/</span> folder doesn't work for you and you'd rather it
+                                    live at <span class="code">eos/stuff/things/</span>, don't worry, but we'll put it
+                                    there for this example.
+                                </p>
+                                <p>Create <span class="code">contracts/example.cpp</span> as follows:</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            #include &lt;eosio/eosio.hpp&gt; <br />
+                                            <br />
+                                            class[[eosio::contract("example")]] example : public
+                                            eosio::contract<br />
+                                            {<br />
+                                            &emsp;public:<br />
+                                            &emsp;using contract::contract;<br />
+                                            <br />
+                                            &emsp;[[eosio::action]] void dothing()<br />
+                                            &emsp;{<br />
+                                            &emsp;&emsp;require_auth(_self);<br />
+                                            <br />
+                                            &emsp;&emsp;eosio::print("Success!");<br />
+                                            &emsp;};<br />
+                                            };
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <p>If you're new to EOS smart contract development, there are a few key things to note:
+                                    <ul>
+                                        <li>The naming of <span class="code">dothing()</span> is important. It has to be
+                                            a valid EOS name, meaning:
+                                            <ul>
+                                                <li>The only allowed characters are lowercase letters, a period, and
+                                                    numbers up to 5 (or 6 in some situations, but a good rule of thumb
+                                                    is to just treat 5 as the max).</li>
+                                                <li>A maximum length of 12 characters</li>
+                                                <li>This means that <span class="code">do_thing()</span> is not valid,
+                                                    and <span class="code">doThing()</span> is also not valid.</li>
+                                                <li>This is because EOS names are encoded into a <span
+                                                        class="code">uint64_t</span>, so there are only so many bits for
+                                                    characters. <a
+                                                        href="https://github.com/EOSIO/eosio.cdt/blob/master/libraries/eosiolib/name.hpp"
+                                                        target="_blank" rel="noopener noreferrer">You can see the
+                                                        implementation
+                                                        of EOS names here if you want to learn more.</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><span class="code">require_auth(_self)</span> requires the sender of the
+                                            transaction to be the account that deployed the contract. This is an easy
+                                            way on EOS to implement owner-only actions.</li>
+                                        <li><span class="code">eosio::print()</span> is an easy way to debug your EOS
+                                            smart contracts.</li>
+                                    </ul>
+                                </p>
+
+                                <h2>Step 4: Add a test file</h2>
+                                <p>
+                                    There are several ways to add tests for Lamington to run:
+                                </p>
+                                <ul>
+                                    <li>Lamington will load any JavaScript or TypeScript files under a <span
+                                            class="code">test</span> or <span class="code">spec</span> directory in your
+                                        project root.</li>
+                                    <li>Lamington will load any JavaScript or TypeScript files anywhere in the project
+                                        that end in <span class="code">.test.js</span> or <span
+                                            class="code">.test.ts</span>.
+                                    <li>Lamington will load any JavaScript or TypeScript files anywhere in the project
+                                        that end in <span class="code">.spec.js</span> or <span
+                                            class="code">.spec.ts</span>.
+                                </ul>
+
+                                <p>If you want to tweak this behaviour, you can ignore files using the <span
+                                        class="code">exclude</span> configuration value in <span
+                                        class="code">.lamingtonrc</span>.</p>
+
+                                <p>So let's create a file called <span class="code">contracts/example.test.js</span>:
+                                </p>
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            const {<br />
+                                            &emsp;AccountManager,<br />
+                                            &emsp;ContractDeployer,<br />
+                                            &emsp;assertMissingAuthority<br />
+                                            } = require("lamington");<br />
+                                            <br />
+                                            describe("Example Contract", function() {<br />
+                                            &emsp;let contract;<br />
+                                            &emsp;let account1;<br />
+                                            <br />
+                                            &emsp;before(async function() {<br />
+                                            &emsp;&emsp;account1 = await AccountManager.createAccount();<br />
+                                            &emsp; });<br />
+                                            <br />
+                                            &emsp;beforeEach(async function() {<br />
+                                            &emsp;&emsp;contract = await
+                                            ContractDeployer.deploy("contracts/example");<br />
+                                            &emsp; });<br />
+                                            <br />
+                                            &emsp;it("allows the owner to call dothing()", async function() {<br />
+                                            &emsp;&emsp;await contract.dothing();<br />
+                                            &emsp;});<br />
+                                            <br />
+                                            &emsp;it("should throw when calling dothing() from another account", async
+                                            function() {<br />
+                                            &emsp;&emsp;await assertMissingAuthority(contract.dothing({ from: account1
+                                            }));<br />
+                                            &emsp;});<br />
+                                            });
+                                        </h5>
+                                    </div>
+                                </blockquote>
+                                <p>This is standard Mocha code, so you can use <a href="https://mochajs.org/"
+                                        target="_blank" rel="noopener noreferrer">whatever you like from their docs</a>
+                                    and you can add
+                                    <a href="https://www.chaijs.com/" target="_blank" rel="noopener noreferrer">Chai</a>
+                                    or another assertion library if you like.</p>
+                                <p>So why are we running <span
+                                        class="code">ContractDeployer.deploy("contracts/example")</span> before every
+                                    test? Since EOS doesn't let us roll back easily, this lets us run tests in a "clean"
+                                    environment, which means a fresh copy of the contract is deployed for every single
+                                    test.</p>
+
+                                <h2>Step 5: Run the Tests</h2>
+                                <p>Still with me? Great! Let's run those tests:</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ lamington test
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <p>If you haven't run Lamington before, it's now going to build a Docker image for you,
+                                    (which takes a few minutes) then it will run the tests you just created. You should
+                                    see that the tests pass!</p>
+
+                                <h2>Optional: Use TypeScript for the Tests</h2>
+
+                                <p>Ok, so what if we want to use TypeScript? That's easy, we only need to do a few
+                                    things:
+                                    <ol>
+                                        <li>Rename <span class="code">contracts/example.test.js</span> to <span
+                                                class="code">contracts/example.test.ts</span>.</li>
+                                        <li>Install types for Mocha:
+                                            <blockquote class="uza-blockquote d-flex">
+                                                <div class="text">
+                                                    <h5>
+                                                        $ npm i --save-dev @types/mocha
+                                                    </h5>
+                                                </div>
+                                            </blockquote>
+                                        </li>
+                                        <li>Add a <span class="code">tsconfig.js</span> file to the root of the project.
+                                            Here's an example:
+                                            <blockquote class="uza-blockquote d-flex">
+                                                <div class="text">
+                                                    <h5>
+                                                        {<br />
+                                                        &emsp;"compilerOptions": {<br />
+                                                        &emsp;&emsp;"target": "es5",<br />
+                                                        &emsp;&emsp;"module": "commonjs",<br />
+                                                        &emsp;&emsp;"strict": true,<br />
+                                                        &emsp;&emsp;"noImplicitAny": true,<br />
+                                                        &emsp;&emsp;"lib": ["es6", "es2015", "dom"]<br />
+                                                        &emsp;},<br />
+                                                        &emsp;"exclude": ["node_modules"]<br />
+                                                        }
+                                                    </h5>
+                                                </div>
+                                            </blockquote>
+                                        </li>
+                                        <li>Update the code in the tests to leverage the types that Lamington generates
+                                            for you from your ABIs:
+                                            <blockquote class="uza-blockquote d-flex">
+                                                <div class="text">
+                                                    <h5>
+                                                        import {<br />
+                                                        &emsp;Account,<br />
+                                                        &emsp;AccountManager,<br />
+                                                        &emsp;ContractDeployer,<br />
+                                                        &emsp;assertMissingAuthority<br />
+                                                        } from "lamington";<br />
+                                                        import { Example } from "./example";<br />
+                                                        <br />
+                                                        describe("Example Contract", function() {<br />
+                                                        &emsp;let contract: Example;<br />
+                                                        &emsp;let account1: Account;<br />
+                                                        <br />
+                                                        &emsp;before(async function() {<br />
+                                                        &emsp;&emsp;account1 = await
+                                                        AccountManager.createAccount();<br />
+                                                        &emsp; });<br />
+                                                        <br />
+                                                        &emsp;beforeEach(async function() {<br />
+                                                        &emsp;&emsp;contract = await
+                                                        ContractDeployer.deploy("contracts/example");<br />
+                                                        &emsp; });<br />
+                                                        <br />
+                                                        &emsp;it("allows the owner to call dothing()", async function()
+                                                        {<br />
+                                                        &emsp;&emsp;await contract.dothing();<br />
+                                                        &emsp;});<br />
+                                                        <br />
+                                                        &emsp;it("should throw when calling dothing() from another
+                                                        account", async
+                                                        function() {<br />
+                                                        &emsp;&emsp;await assertMissingAuthority(contract.dothing({
+                                                        from: account1
+                                                        }));<br />
+                                                        &emsp;});<br />
+                                                        });
+                                                    </h5>
+                                                </div>
+                                            </blockquote>
+                                        </li>
+                                    </ol>
+                                </p>
+
+                                <p>Now you have full autocomplete in VSCode when you call actions on your contracts, and
+                                    your tests are type safe!</p>
+
+                                <img class="mb-50" src="{% asset_path autocomplete.png %}"
+                                    alt="VSCode autocomplete for smart contract actions" />
+
+                                <h2>Summary</h2>
+                                <p>By now you've likely realised some of the things that Lamington can do for you:</p>
+                                <ul>
+                                    <li>It manages a Docker container with EOS and the Contract Development Toolkit
+                                        (CDT) in it for you.</li>
+                                    <li>It builds your contracts.</li>
+                                    <li>It creates typed interfaces for your contracts from ABI files.</li>
+                                    <li>It includes a bunch of helper methods that help with smart contract testing. <a
+                                            href="https://api.lamington.io/modules/_utils_.html">See the full list
+                                            here.</a></li>
+                                    <li>It can be configured to ignore certain tests.</li>
+                                </ul>
+
+                                <p>I hope you've found this helpful. We're always keen to talk to new EOS devs, so
+                                    please feel free to join our Slack below!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
