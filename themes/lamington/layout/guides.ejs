@@ -30,7 +30,10 @@
             </div>
         </div>
         <div class="row">
-            <% for (const post of site.posts.toArray()) { %>
+            <% 
+            const posts = site.posts.toArray();
+            posts.sort((a, b) => a.date < b.date);
+            for (const post of posts) { %>
             <div class="col-12 col-lg-4">
                 <div class="single-blog-post bg-img mb-80" style="background-image: url(<%= post.featured_image %>);">
                     <!-- Post Content -->
