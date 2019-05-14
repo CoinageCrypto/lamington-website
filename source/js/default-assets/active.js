@@ -213,6 +213,7 @@
   // ****************************
   if ($.fn.scrollUp) {
     uza_window.scrollUp({
+      easingType: "swing",
       scrollSpeed: 500,
       scrollText: '<i class="fa fa-angle-up"</i>'
     });
