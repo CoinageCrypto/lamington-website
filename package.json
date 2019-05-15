@@ -6,7 +6,7 @@
     "start": "hexo clean && hexo server --config _config.yml,_config.local.yml",
     "server": "hexo server"
   },
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "hexo": {
     "version": "3.8.0"
