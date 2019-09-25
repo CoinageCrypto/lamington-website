@@ -1,0 +1,149 @@
+---
+title: Contributing to Lamington
+date: 2019-09-25 10:43:22
+excerpt: Want to make changes to Lamington? Here's how to get started.
+featured_image: blast-off.jpeg
+---
+
+<section class="blog-details-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="blog-details-content">
+                    <!-- Post Details Text -->
+                    <div class="post-details-text">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
+                                <div class="post-content text-center mb-50">
+                                    <h2>Contributing to Lamington</h2>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <img class="mb-50" src="{% asset_path working-from-above.jpg %}"
+                                    alt="Let's get to work!" />
+                            </div>
+                            <div class="col-12 col-lg-10">
+                                <h2>Goal</h2>
+                                <p>
+                                    At the end of this guide, you will have a development environment set up where you
+                                    can rapidly test changes to Lamington's code base.
+                                </p>
+                                <h2>Prerequisites</h2>
+                                <p>
+                                    You'll need a smart contract project you want to run Lamington on in order to test
+                                    changes. If you don't have one you're working on yourself, you can use the <a
+                                        href="https://github.com/MitchPierias/Advanced-EOS-Examples" target="_blank"
+                                        rel="noreferrer noopener">Advanced EOS Examples project</a>
+                                    to get started.</p>
+                                <p>Then follow the instructions on the <a href="/install-lamington"></a>Install
+                                    Lamington</a> page to install Lamington <b>locally in the project, not globally</b>.
+                                    Make sure to install the prerequisites that Lamington needs as part of the process.
+                                </p>
+
+                                <p> That's it for prerequisites.</p>
+
+                                <h2>Step 1: Clone the Lamington repository</h2>
+
+                                <p>We need to have the project files locally so we can make changes. Clone from GitHub
+                                    like so:</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ git clone https://github.com/CoinageCrypto/lamington.git
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <h2>Step 2: Install Lamington's Dependencies</h2>
+
+                                <p>Install the NPM dependencies that Lamington needs:</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ cd lamington<br>
+                                            $ npm install
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <h2>Step 3: Link Lamington</h2>
+                                <p>Now in order to make changes on our files, then see these changes used on our project
+                                    we're going to leverage <a href="https://docs.npmjs.com/cli/link" target="_blank"
+                                        rel="noopener noreferrer">a
+                                        feature of NPM called linking</a>. This is a two step process. First we tell NPM
+                                    to symbolically link Lamington from it's working directory to the global package
+                                    list:</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ npm link
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <p>Now we need to tell our other project to use this linked version instead of what it
+                                    got from the NPM registry before:</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ cd [wherever your other project is]<br>
+                                            $ npm link lamington
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <p>Now we're almost there! The project is now using your local copy of Lamington's files
+                                    when it runs Lamington commands.</p>
+
+                                <h2>Step 4: Build Lamington</h2>
+
+                                <p>There's one more catch, which is that NPM and Node don't really know about our
+                                    TypeScript files in the Lamington project. We need to build them to plain vanilla JS
+                                    files in order to have our changes used when we modify files in the Lamington
+                                    project.</p>
+
+                                <p>At this stage I usually open up a second terminal window so I can have both going at
+                                    once, because we'll be jumping back and forth a bit.</p>
+
+                                <blockquote class="uza-blockquote d-flex">
+                                    <div class="text">
+                                        <h5>
+                                            $ cd [wherever Lamington was cloned]<br>
+                                            $ npm run build
+                                        </h5>
+                                    </div>
+                                </blockquote>
+
+                                <p>So the workflow is:
+                                    <ol>
+                                        <li>Make changes to Lamington</li>
+                                        <li>Save the changes</li>
+                                        <li><span class="code">npm run build</span></li>
+                                        <li>Make sure the build succeeded and that there are no TypeScript errors</li>
+                                        <li>Go back to your EOS project and test the changes you just made</li>
+                                        <li>When you're happy with your changes, open up a PR and we'll try to get them
+                                            incorporated into Lamington!</li>
+                                    </ol>
+                                </p>
+
+                                <h2>Ideas for the Future</h2>
+
+                                <p>TypeScript supports a watch mode, so we could make development a bit easier if we
+                                    figure out a command in <span class="code">package.json</span> which builds and
+                                    watches for changes.
+                                </p>
+
+                                <p>I hope you've found this helpful. We're always keen to talk to new EOS devs, so
+                                    please feel free to join our Slack below!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
